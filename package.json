@@ -1,0 +1,26 @@
+{
+  "name": "task-manager-app",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/hamashua1/task-manager-app#readme",
+  "bugs": {
+    "url": "https://github.com/hamashua1/task-manager-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hamashua1/task-manager-app.git"
+  },
+  "license": "ISC",
+  "author": "joshua nun",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mogoose": "^0.0.1-security",
+    "nodemailer": "^7.0.5"
+  }
+}
