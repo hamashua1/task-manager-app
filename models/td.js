@@ -4,7 +4,8 @@ const tdSchema = mongoose.Schema({
   task: { type: String },
   name: { type: String },
   email: { type: String },
-  password: { type: String, required: true },
+  comment:{type: String},
+  password: { type: String, required: true}
 });
 
 export const tdModel = mongoose.model('td', tdSchema);

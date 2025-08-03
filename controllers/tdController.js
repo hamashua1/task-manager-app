@@ -20,4 +20,16 @@ export const username = async (req, res) => {
   } catch (err) {
     res.status(400).json({ message: 'failed to add to database' });
   }
-};
+}
+
+
+export const comment = async(req,res)=>{
+  try{
+    const{comment} = req.body
+    const results = new tdModel({comment})
+    await results.save()
+    res.status(200).json({mesaage:'succesfully jumped in the db'})
+  }catch{
+       res.status(401).json({mesaage:'db didnt accept'})
+  }
+}
