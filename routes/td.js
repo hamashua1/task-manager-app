@@ -1,11 +1,8 @@
-import { createTask } from "../controllers/tdController.js"
+import { Task } from "../controllers/tdController.js"
 const router = express.Router()
 
-
-
-
-
-router.post('/api/todo/createTask', createTask) 
+router.post('/api/todo/createTask', Task) 
+router.post('/api/todo/user', users)
 
 
 
