@@ -7,7 +7,7 @@ export const Task = async (req, res) => {
     await results.save();
     res.status(200).json({ message: 'succefuly added to database', results });
   } catch (err) {
-    res.json({ message: 'failed to add to db' });
+    res.status(400).json({ message: 'failed to add to db' });
   }
 };
 
