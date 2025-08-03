@@ -1,12 +1,8 @@
-import {MongoClient} from 'mongodb'
+import mongoose from 'mongoose'
+import 'dotenv/config'
 
-MongoClient.connect(process.env.MONGO_URI, (err, db) => {
-  if (err) throw err
-
-  db.collection('td').find().toArray((err, result) => {
-    if (err) throw err
-
-    console.log(result)
-  })
-})
+export const connectDB = async ()=>{
+  await mongoose.connect(process.env.MONGODB_URI)
+  console.log('Database is firing 🚀🔥')
+}
 

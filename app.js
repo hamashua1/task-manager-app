@@ -3,6 +3,7 @@ import cors from 'cors'
 import tdRoutes from './routes/td.js'
 import cookieParser from 'cookie-parser'
 import 'dotenv/config'
+import { connectDB } from './database/db.js'
 const app = express()
 const port = process.env.PORT 
 app.use(cors())
@@ -13,6 +14,8 @@ app.use(cookieParser())
 
 
 
+// database connection
+connectDB()
 
 app.listen(port , ()=>{
    console.log(`application can be found on port ${port}`)

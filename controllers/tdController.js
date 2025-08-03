@@ -1,4 +1,4 @@
-import tdModel from "../models/schema.js"
+import {tdModel} from "../models/td.js"
 
 
 export const Task = async(req,res)=>{
@@ -12,10 +12,10 @@ export const Task = async(req,res)=>{
     }
 }
 
-export const users = async(req,res)=>{
+export const username = async(req,res)=>{
     try{
-         const {user} = req.body
-         const results = new tdModel({user})
+         const {name} = req.body
+         const results = new tdModel({name})
          await results.save()
          res.status(200).json({message:'user added to database'})
     }catch(err){
