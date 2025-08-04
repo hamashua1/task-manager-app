@@ -1,4 +1,5 @@
 import { tdModel } from "../models/td.js"
+import bcrypt from 'bcrypt'
 
 export const signUp = async()=>{
     try{
