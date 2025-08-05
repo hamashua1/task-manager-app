@@ -1,26 +1,24 @@
-import express from 'express'
-import cors from 'cors'
-import tdRoutes from './routes/td.js'
-import loginPageRoutes from './routes/loginPage.js'
-import cookieParser from 'cookie-parser'
-import 'dotenv/config'
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
-import {tdModel} from './models/td.js'
-import { connectDB } from './database/db.js'
-const app = express()
-const port = process.env.PORT
-app.use(cors())
-app.use(express.json())
-app.use(tdRoutes)
-app.use(loginPageRoutes)
-app.use(cookieParser())
-
-
+import express from 'express';
+import cors from 'cors';
+import tdRoutes from './routes/td.js';
+import loginPageRoutes from './routes/loginPage.js';
+import cookieParser from 'cookie-parser';
+import 'dotenv/config';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { tdModel } from './models/td.js';
+import { connectDB } from './database/db.js';
+const app = express();
+const port = process.env.PORT;
+app.use(cors());
+app.use(express.json());
+app.use(tdRoutes);
+app.use(loginPageRoutes);
+app.use(cookieParser());
 
 // database connection
-connectDB()
+connectDB();
 
 app.listen(port, () => {
-  console.log(`application can be found on port ${port}`)
-})
+  console.log(`application can be found on port ${port}`);
+});
