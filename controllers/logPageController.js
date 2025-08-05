@@ -25,7 +25,7 @@ export const signIn = async(req,res)=>{
     const isPasswordCorrect = await bcrypt.compare(password, results.password)
     if(!isPasswordCorrect){
     return res.status(401).json({message:'password miss-matched!'})
-}
+    }
     const token = jwt.sign ({id:results._id}, process.env.JWT_SECRET, {expiresIn:'1h'})
     res.cookie('token',token, {
     httpOnly: true,
