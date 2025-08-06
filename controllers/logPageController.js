@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 
 export const signUp = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name: string, email:string, password: string | number} = req.body;
     const saltRounds = 10;
     const hashPassword = await bcrypt.hash(password, saltRounds);
     const results = new tdModel({ name, email, password: hashPassword });
