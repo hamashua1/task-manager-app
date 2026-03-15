@@ -1,45 +1,48 @@
-import { tdModel } from '../models/td.js';
+import { UserModel } from '../models/user.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import cookieParser from 'cookie-parser';
 
 export const signUp = async (req, res) => {
   try {
-    const { name: string, email:string, password: string | number} = req.body;
+    const { name, email, password } = req.body;
+    if (!password || password.length < 8) {
+      return res.status(400).json({ message: 'Password must be at least 8 characters' });
+    }
     const saltRounds = 10;
     const hashPassword = await bcrypt.hash(password, saltRounds);
-    const results = new tdModel({ name, email, password: hashPassword });
-    await results.save();
-    res.status(200).json({ message: 'credentials added to database', results });
+    const user = new UserModel({ name, email, password: hashPassword });
+    await user.save();
+    res.status(201).json({ message: 'Account created successfully' });
   } catch (err) {
-    res
-      .status(401)
-      .json({ message: 'credentials failed to be added to database' });
+    if (err.code === 11000) {
+      return res.status(409).json({ message: 'Email already registered' });
+    }
+    res.status(500).json({ message: 'Failed to create account' });
   }
 };
 
 export const signIn = async (req, res) => {
-  const { email, password } = req.body;
-  const results = await tdModel.findOne({ email });
-  if (!results) {
-    return res
-      .status(401)
-      .json({ message: 'email not found in our system, sign up' });
+  try {
+    const { email, password } = req.body;
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 1000,
+    });
+    res.status(200).json({ message: 'Sign in successful' });
+  } catch (err) {
+    res.status(500).json({ message: 'Sign in failed' });
   }
-  const isPasswordCorrect = await bcrypt.compare(password, results.password);
-  if (!isPasswordCorrect) {
-    return res.status(401).json({ message: 'password miss-matched!' });
-  }
-  const token = jwt.sign({ id: results._id }, process.env.JWT_SECRET, {
-    expiresIn: '1h',
-  });
-  res.cookie('token', token, {
-    httpOnly: true,
-    secure: false,
-    samesite: 'lax',
-    maxAge: 60 * 60 * 1000,
-  });
-  res
-    .status(200)
-    .json({ message: 'sign in successful', results, isPasswordCorrect });
 };

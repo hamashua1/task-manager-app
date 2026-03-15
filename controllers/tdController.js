@@ -1,34 +1,24 @@
-import { tdModel } from '../models/td.js';
+import { TaskModel } from '../models/task.js';
+import { CommentModel } from '../models/comment.js';
 
 export const Task = async (req, res) => {
   try {
     const { task } = req.body;
-    const results = new tdModel({ task });
+    const results = new TaskModel({ task, userId: req.userId });
     await results.save();
-    res.status(200).json({ message: 'succefuly added to database', results });
+    res.status(201).json({ message: 'Task successfully added', results });
   } catch (err) {
-    res.status(400).json({ message: 'failed to add to db' });
-  }
-};
-
-export const username = async (req, res) => {
-  try {
-    const { name } = req.body;
-    const results = new tdModel({ name });
-    await results.save();
-    res.status(200).json({ message: 'user added to database' });
-  } catch (err) {
-    res.status(400).json({ message: 'failed to add to database' });
+    res.status(500).json({ message: 'Failed to add task' });
   }
 };
 
 export const comment = async (req, res) => {
   try {
     const { comment } = req.body;
-    const results = new tdModel({ comment });
+    const results = new CommentModel({ comment, userId: req.userId });
     await results.save();
-    res.status(200).json({ mesaage: 'succesfully jumped in the db' });
-  } catch {
-    res.status(401).json({ mesaage: 'db didnt accept' });
+    res.status(201).json({ message: 'Comment successfully added', results });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to add comment' });
   }
 };
