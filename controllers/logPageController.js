@@ -15,7 +15,7 @@ export const signUp = async (req, res) => {
     res.status(201).json({ message: 'Account created successfully' });
   } catch (err) {
     if (err.code === 11000) {
-      return res.status(409).json({ message: 'Email already registered' });
+      return res.status(409).json({ message: 'Email or password already exist' });
     }
     res.status(500).json({ message: 'Failed to create account' });
   }
