@@ -5,8 +5,8 @@ import jwt from 'jsonwebtoken';
 export const signUp = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    if (!password || password.length < 8) {
-      return res.status(400).json({ message: 'Password must be at least 8 characters' });
+    if (!password || password.length <= 8) {
+      return res.status(400).json({ message: 'Password must be at least 9 characters' });
     }
     const saltRounds = 10;
     const hashPassword = await bcrypt.hash(password, saltRounds);
