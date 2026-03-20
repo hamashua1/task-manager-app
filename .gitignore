@@ -33,6 +33,9 @@ pids
 # dotenv environment variables file
 .env
 
+# Claude
+CLAUDE.md
+
 # IDE files
 .vscode/
 .idea/
